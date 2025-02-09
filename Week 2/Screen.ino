@@ -9,6 +9,13 @@
 
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire , OLED_RESET);
 
+//global variables
+int days = 0;
+int hours = 0;
+int minutes = 0;
+int seconds = 0;
+
+
 void setup() {
   // put your setup code here, to run once:
   
@@ -21,28 +28,38 @@ void setup() {
 
   //turn on OLED display
   display.display();
-  delay(2000);
 
   //clear OLED display
   display.clearDisplay();
 
-  print_line();
+  print_line("Welcome to Medibox!", 10, 20, 2);
   
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
+  print_time_now();
 }
 
-void print_line(void){
+void print_line(String text, int column, int row, int text_size){
   display.clearDisplay();
 
   //display a custom message
-  display.setTextSize(2);
+  display.setTextSize(text_size);
   display.setTextColor(SSD1306_WHITE);
-  display.setCursor(0,0);
+  display.setCursor(column , row);
   display.println(F("Welcome to Medibox!"));
 
   display.display();
   delay(2000);
+}
+
+void print_time_now(void){
+  print_line(String(days), 0, 0, 2);
+  print_line(":", 20, 0, 2);
+  print_line(String(hours), 30, 0, 2);
+  print_line(":", 50, 0, 2);
+  print_line(String(minutes), 60, 0, 2);
+  print_line(":", 80, 0, 2);
+  print_line(String(seconds), 90, 0, 2); 
 }
