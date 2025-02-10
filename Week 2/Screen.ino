@@ -196,7 +196,7 @@ void go_to_menu() {
     if (pressed == PB_UP){
       delay(200);
       current_mode += 1;
-      current_mode = current_mode % max_nodes;
+      current_mode = current_mode % max_modes;
     }
 
     else if (pressed == PB_DOWN){
@@ -210,7 +210,7 @@ void go_to_menu() {
     else if (pressed == PB_OK){
       delay(200);
       Serial.println(current_mode);
-      run_mode(current_mode);
+      //run_mode(current_mode);
     }
 
     else if (pressed == PB_CANCEL){
@@ -218,10 +218,4 @@ void go_to_menu() {
       break;
     }
   }
-}
-
-void go_to_menu(){
-  display.clearDisplay();
-  print_line("MENU", 0, 0, 2);
-  delay(1000);
 }
