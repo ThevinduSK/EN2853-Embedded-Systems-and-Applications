@@ -28,6 +28,7 @@ int days = 0;
 int hours = 0;
 int minutes = 0;
 int seconds = 0;
+int month = 0;
 float UTC_OFFSET = 0.0; 
 
 unsigned long timeNow = 0;
@@ -129,13 +130,15 @@ void print_line(String text, int column, int row, int text_size) {
 void print_time_now(void) {
   display.clearDisplay();  // 
 
-  print_line(String(days), 0, 0, 2);
-  print_line(":", 20, 0, 2);
-  print_line(String(hours), 30, 0, 2);
-  print_line(":", 50, 0, 2);
-  print_line(String(minutes), 60, 0, 2);
-  print_line(":", 80, 0, 2);
-  print_line(String(seconds), 90, 0, 2);
+  //show time
+  String timeStr = String(hours) + ":" + (minutes < 10 ? "0" : "") + String(minutes) + ":" + (seconds < 10 ? "0" : "") + String(seconds);
+  print_line(timeStr, 0, 0, 2);
+  
+  // Show date (DD/MM)
+  String dateStr = String(days) + "/" + String(month);
+  print_line(dateStr, 0, 25, 2); //Shows below the time
+
+  display.display();
 }
 
 void update_time() {
@@ -145,6 +148,7 @@ void update_time() {
     minutes = timeinfo.tm_min;
     seconds = timeinfo.tm_sec;
     days = timeinfo.tm_mday;
+    month = timeinfo.tm_mon + 1; // tm_mon is 0-11, so we add 1
   } else {
     Serial.println("Failed to get time from NTP.");
   }
